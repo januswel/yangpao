@@ -49,20 +49,20 @@ Edit your .yangpao.yml
 ```yml
 ---
 current: 2.1.3
-paths:
+files:
   # matches like "2.1.3" in README.md
   - README.md
 
   # matches like "v2.1.3" in release_tag
-  - release_tag
+  - path: release_tag
     prefix: v
 
   # matches like "ver 2.1.3" in version.txt
-  - assets/version.txt
+  - path: assets/version.txt
     prefix: 'ver '
 
   # matches like "yangpao 2.1.3 version" in src/public/index.html
-  - src/public/index.html
+  - path: src/public/index.html
     prefix: 'yangpao '
     postfix: ' version'
 ```
