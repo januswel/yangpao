@@ -2,7 +2,9 @@
 ============
 
 version number raiser for [semver](http://semver.org/)
+
 inspired by [bmp](https://github.com/kt3k/bmp)
+
 
 synopsis
 --------
