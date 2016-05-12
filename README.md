@@ -86,7 +86,8 @@ yangpao --minor
 yangpao -m
 
 # raises major version number
-# breaking change
+# short option is not provided to prevent operational erros
+# because this operation means the version upgrade includes incompatible changes
 yangpao --major
 
 # raise a patch version and commit the changes in one shot
