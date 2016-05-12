@@ -53,16 +53,17 @@ paths:
   # matches like "2.1.3" in README.md
   - README.md
 
-  # matches like "v2.1.3" in README.md
+  # matches like "v2.1.3" in release_tag
   - release_tag
     prefix: v
 
-  # matches like "ver 2.1.3" in README.md
-  - release_tag
+  # matches like "ver 2.1.3" in version.txt
+  - assets/version.txt
     prefix: 'ver '
 
-  # matches like "2.1.3 version" in README.md
-  - release_tag
+  # matches like "yangpao 2.1.3 version" in src/public/index.html
+  - src/public/index.html
+    prefix: 'yangpao '
     postfix: ' version'
 ```
 
