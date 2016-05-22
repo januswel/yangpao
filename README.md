@@ -13,16 +13,12 @@ synopsis
     - major version
     - minor version
     - patch version
-- `commit`s whole changes in target files, and creates a `tag` for the commit with new version number using git
-    - see "requirements"
 
 
 requirements
 ------------
 
-- git
-    - If you need to commit changes by yangpao with `--tag`, `-t` option.
-    - Make sure that git is installed and the path to git binary is added into $PATH
+- yangpao dose not need any requirements.
 
 
 install
@@ -89,8 +85,4 @@ yangpao -m
 # short option is not provided to prevent operational erros
 # because this operation means the version upgrade includes incompatible changes
 yangpao --major
-
-# raise a patch version and commit the changes in one shot
-yangpao --patch --tag
-yangpao -pt
 ```
