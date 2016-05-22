@@ -26,11 +26,14 @@ install
 
 [release page](https://github.com/januswel/yangpao/releases)
 
-1. getting executable
-    - Get a newest binary for your os/arch from release page.
-    - Rename it to `yangpao`.
-    - Put your `yangpao` into a directory within your $PATH.
-2. generating a setting file
+1. get an executable
+    - binary download
+        - Get a newest binary for your os/arch from release page.
+        - Rename it to `yangpao`.
+        - Put your `yangpao` into a directory within your $PATH.
+    - go get
+        - `go get github.com/januswel/yangpao`
+2. generate a setting file
     - Change the directory to your project root
     - Run `yangpao -g`
 
