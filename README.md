@@ -41,29 +41,32 @@ install
 usage
 -----
 
-### .yangpao.yml
+### .yangpao.toml
 
-Edit your .yangpao.yml
+Edit your .yangpao.toml
 
-```yml
----
-current: 2.1.3
-files:
-  # matches like "2.1.3" in README.md
-  - README.md
+```toml:.yangpao.toml
+current = "2.1.3"
 
-  # matches like "v2.1.3" in release_tag
-  - path: release_tag
-    prefix: v
+[[files]]
+# matches like "2.1.3" in README.md
+path = "README.md"
 
-  # matches like "ver 2.1.3" in version.txt
-  - path: assets/version.txt
-    prefix: 'ver '
+[[files]]
+# matches like "v2.1.3" in release_tag
+path = "release_tag"
+prefix = "v"
 
-  # matches like "yangpao 2.1.3 version" in src/public/index.html
-  - path: src/public/index.html
-    prefix: 'yangpao '
-    postfix: ' version'
+[[files]]
+# matches like "ver 2.1.3" in version.txt
+path = "assets/version.txt"
+prefix = "ver "
+
+[[files]]
+# matches like "yangpao 2.1.3 version" in src/public/index.html
+path = "src/public/index.html"
+prefix = "yangpao "
+postfix = " version"
 ```
 
 ### yangpao
