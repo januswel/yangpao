@@ -72,6 +72,14 @@ func SearchSettingFile() error {
 	return fmt.Errorf("%s is not found. Run %s -g to generate", SETTINGS_FILE_NAME, os.Args[0])
 }
 
+func CurrentVersion() (string, error) {
+	var settings Settings
+	if err := ParseSettings(SETTINGS_FILE_NAME, &settings); err != nil {
+		return "", err
+	}
+	return settings.Current, nil
+}
+
 func GenerateSettingFile() {
 	var settings Settings
 
