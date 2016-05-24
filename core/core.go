@@ -66,6 +66,10 @@ func GenerateSettingFile() {
 }
 
 func CheckVersions(versions *Versions) error {
+	if !Exists(SETTINGS_FILE_NAME) {
+		return fmt.Errorf("%s is not found. Run %s -g to generate", SETTINGS_FILE_NAME, os.Args[0])
+	}
+
 	var settings Settings
 	if err := ParseSettings(SETTINGS_FILE_NAME, &settings); err != nil {
 		return err
