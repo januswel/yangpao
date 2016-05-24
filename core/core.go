@@ -6,6 +6,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -101,7 +102,11 @@ func CheckVersions(versions *Versions) error {
 
 	for _, file := range settings.Files {
 		if !Exists(file.Path) {
-			return fmt.Errorf("file is not exist: %s", file.Path)
+			absolutePath, err := filepath.Abs(file.Path)
+			if err != nil {
+				return err
+			}
+			return fmt.Errorf("file is not exist: %s", absolutePath)
 		}
 		var version Version
 		version.Path = file.Path
