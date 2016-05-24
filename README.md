@@ -53,9 +53,9 @@ current = "2.1.3"
 path = "README.md"
 
 [[files]]
-# matches like "v2.1.3" in release_tag
+# matches like "ver2.1.3" in release_tag
 path = "release_tag"
-prefix = "v"
+prefix = "ver"
 
 [[files]]
 # matches like "ver 2.1.3" in version.txt
