@@ -1,6 +1,8 @@
 揚炮 yangpao v0.0.1
 ===================
 
+[![Circle CI](https://circleci.com/gh/januswel/yangpao/tree/master.svg?style=shield)](https://circleci.com/gh/:user/:repo/tree/master)
+
 version number raiser for [semver](http://semver.org/)
 
 inspired by [bmp](https://github.com/kt3k/bmp)
