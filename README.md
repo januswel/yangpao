@@ -1,5 +1,5 @@
-揚炮 yangpao
-============
+揚炮 yangpao v0.0.1
+===================
 
 version number raiser for [semver](http://semver.org/)
 
