@@ -46,27 +46,31 @@ usage
 Edit your .yangpao.toml
 
 ```toml:.yangpao.toml
-current = "2.1.3"
+Current = "2.1.3"
 
-[[files]]
-# matches like "2.1.3" in README.md
-path = "README.md"
+[[Files]]
+  # matches like "2.1.3" in README.md
+  Path = "README.md"
+  Prefix = ""
+  Postfix = ""
 
-[[files]]
-# matches like "ver2.1.3" in release_tag
-path = "release_tag"
-prefix = "ver"
+[[Files]]
+  # matches like "ver2.1.3" in release_tag
+  Path = "release_tag"
+  Prefix = "ver"
+  Postfix = ""
 
-[[files]]
-# matches like "ver 2.1.3" in version.txt
-path = "assets/version.txt"
-prefix = "ver "
+[[Files]]
+  # matches like "ver 2.1.3" in version.txt
+  Path = "assets/version.txt"
+  Prefix = "ver "
+  Postfix = ""
 
-[[files]]
-# matches like "yangpao 2.1.3 version" in src/public/index.html
-path = "src/public/index.html"
-prefix = "yangpao "
-postfix = " version"
+[[Files]]
+  # matches like "yangpao 2.1.3 version" in src/public/index.html
+  Path = "src/public/index.html"
+  Prefix = "yangpao "
+  Postfix = " version"
 ```
 
 ### yangpao
