@@ -27,6 +27,8 @@ func main() {
 		fmt.Fprintf(os.Stderr, "    -m|--minor      upgrades major version\n")
 		fmt.Fprintf(os.Stderr, "    -p|--patch      upgrades patch version\n")
 	}
+	currentVersionShort := flag.Bool("c", false, "")
+	currentVersionLong := flag.Bool("current", false, "")
 	generateShort := flag.Bool("g", false, "")
 	generateLong := flag.Bool("generate", false, "")
 	patchShort := flag.Bool("p", false, "")
@@ -37,6 +39,7 @@ func main() {
 
 	flag.Parse()
 
+	needsToShowCurrentVersion := *currentVersionShort || *currentVersionLong
 	needsToGenerateSettingFile := *generateShort || *generateLong
 	patch := *patchShort || *patchLong
 	minor := *minorShort || *minorLong
@@ -44,6 +47,15 @@ func main() {
 
 	if err := core.SearchSettingFile(); err != nil {
 		panic(err)
+	}
+
+	if needsToShowCurrentVersion {
+		currentVersion, err := core.CurrentVersion()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(currentVersion)
+		os.Exit(0)
 	}
 
 	if needsToGenerateSettingFile {
