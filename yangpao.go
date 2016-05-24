@@ -22,6 +22,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Usage: %s [--major] [-m-|--minor] [-p|--patch]\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "\n")
 		fmt.Fprintf(os.Stderr, "Choose only one option from below to upgrade version\n")
+		fmt.Fprintf(os.Stderr, "    -c|--current    shows current version\n")
 		fmt.Fprintf(os.Stderr, "    -g|--generate   generates setting file .yangpao.toml\n")
 		fmt.Fprintf(os.Stderr, "    --major         upgrades major version\n")
 		fmt.Fprintf(os.Stderr, "    -m|--minor      upgrades major version\n")

@@ -81,6 +81,10 @@ Current = "2.1.3"
 # shows current version and checks consistency
 yangpao
 
+# shows current version only
+yangpao --current
+yangpao -c
+
 # generates setting file on current directory
 yangpao --generate
 yangpao -g
