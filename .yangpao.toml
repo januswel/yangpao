@@ -1,0 +1,9 @@
+Current = "0.0.1"
+
+[[Files]]
+  Path = "README.md"
+  Prefix = "v"
+
+[[Files]]
+  Path = "release_tag"
+  Prefix = "v"
