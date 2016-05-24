@@ -6,6 +6,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -45,6 +46,32 @@ func Exists(path string) bool {
 	return err == nil
 }
 
+func SearchSettingFile() error {
+	previous := ""
+	current, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	for previous != current {
+		if Exists(SETTINGS_FILE_NAME) {
+			return nil
+		}
+
+		previous = current
+		err = os.Chdir("..")
+		if err != nil {
+			return err
+		}
+		current, err = os.Getwd()
+		if err != nil {
+			return err
+		}
+	}
+
+	return fmt.Errorf("%s is not found. Run %s -g to generate", SETTINGS_FILE_NAME, os.Args[0])
+}
+
 func GenerateSettingFile() {
 	var settings Settings
 
@@ -66,10 +93,6 @@ func GenerateSettingFile() {
 }
 
 func CheckVersions(versions *Versions) error {
-	if !Exists(SETTINGS_FILE_NAME) {
-		return fmt.Errorf("%s is not found. Run %s -g to generate", SETTINGS_FILE_NAME, os.Args[0])
-	}
-
 	var settings Settings
 	if err := ParseSettings(SETTINGS_FILE_NAME, &settings); err != nil {
 		return err
@@ -79,7 +102,11 @@ func CheckVersions(versions *Versions) error {
 
 	for _, file := range settings.Files {
 		if !Exists(file.Path) {
-			return fmt.Errorf("file is not exist: %s", file.Path)
+			absolutePath, err := filepath.Abs(file.Path)
+			if err != nil {
+				return err
+			}
+			return fmt.Errorf("file is not exist: %s", absolutePath)
 		}
 		var version Version
 		version.Path = file.Path
