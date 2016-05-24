@@ -22,10 +22,13 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Usage: %s [--major] [-m-|--minor] [-p|--patch]\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "\n")
 		fmt.Fprintf(os.Stderr, "Choose only one option from below to upgrade version\n")
-		fmt.Fprintf(os.Stderr, "    --major         upgrade major version\n")
-		fmt.Fprintf(os.Stderr, "    -m|--minor      upgrade major version\n")
-		fmt.Fprintf(os.Stderr, "    -p|--patch      upgrade patch version\n")
+		fmt.Fprintf(os.Stderr, "    -g|--generate   generates setting file .yangpao.toml\n")
+		fmt.Fprintf(os.Stderr, "    --major         upgrades major version\n")
+		fmt.Fprintf(os.Stderr, "    -m|--minor      upgrades major version\n")
+		fmt.Fprintf(os.Stderr, "    -p|--patch      upgrades patch version\n")
 	}
+	generateShort := flag.Bool("g", false, "")
+	generateLong := flag.Bool("generate", false, "")
 	patchShort := flag.Bool("p", false, "")
 	patchLong := flag.Bool("patch", false, "")
 	minorShort := flag.Bool("m", false, "")
@@ -34,9 +37,15 @@ func main() {
 
 	flag.Parse()
 
+	needsToGenerateSettingFile := *generateShort || *generateLong
 	patch := *patchShort || *patchLong
 	minor := *minorShort || *minorLong
 	major := *majorLong
+
+	if needsToGenerateSettingFile {
+		core.GenerateSettingFile()
+		os.Exit(0)
+	}
 
 	if !(patch || minor || major) {
 		ShowVersions()

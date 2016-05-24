@@ -45,7 +45,31 @@ func Exists(path string) bool {
 	return err == nil
 }
 
+func GenerateSettingFile() {
+	var settings Settings
+
+	settings.Current = "0.0.0"
+
+	var file File
+
+	file.Path = "README.md"
+	file.Prefix = "AwesomeProject "
+	file.Postfix = " version"
+	settings.Files = append(settings.Files, file)
+
+	file.Path = "release_tag"
+	file.Prefix = "v"
+	file.Postfix = ""
+	settings.Files = append(settings.Files, file)
+
+	WriteBackSettings(settings)
+}
+
 func CheckVersions(versions *Versions) error {
+	if !Exists(SETTINGS_FILE_NAME) {
+		return fmt.Errorf("%s is not found. Run %s -g to generate", SETTINGS_FILE_NAME, os.Args[0])
+	}
+
 	var settings Settings
 	if err := ParseSettings(SETTINGS_FILE_NAME, &settings); err != nil {
 		return err
@@ -147,13 +171,18 @@ func IncrementSpecifiedVersion(current string, index int) (string, error) {
 }
 
 func WriteBackSettings(settings Settings) error {
+	file, err := os.OpenFile(SETTINGS_FILE_NAME, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	if err != nil {
+		return err
+	}
+
 	var buffer bytes.Buffer
 	encoder := toml.NewEncoder(&buffer)
 	if err := encoder.Encode(settings); err != nil {
 		return err
 	}
 
-	if err := ioutil.WriteFile(SETTINGS_FILE_NAME, buffer.Bytes(), 0); err != nil {
+	if _, err := file.Write(buffer.Bytes()); err != nil {
 		return err
 	}
 
