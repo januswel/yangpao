@@ -42,6 +42,10 @@ func main() {
 	minor := *minorShort || *minorLong
 	major := *majorLong
 
+	if err := core.SearchSettingFile(); err != nil {
+		panic(err)
+	}
+
 	if needsToGenerateSettingFile {
 		core.GenerateSettingFile()
 		os.Exit(0)
