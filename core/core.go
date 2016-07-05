@@ -18,9 +18,10 @@ type Settings struct {
 }
 
 type File struct {
-	Path    string
-	Prefix  string
-	Postfix string
+	Path         string
+	Prefix       string
+	Postfix      string
+	IsSequential bool
 }
 
 type Versions struct {
@@ -34,7 +35,8 @@ type Version struct {
 }
 
 const SETTINGS_FILE_NAME = ".yangpao.toml"
-const VERSION_PATTERN = `\d+\.\d+\.\d+`
+const SEMANTIC_VERSION_PATTERN = `\d+\.\d+\.\d+`
+const SEQUENTIAL_VERSION_PATTERN = `\d+`
 const (
 	PATCH = iota
 	MINOR
@@ -90,11 +92,19 @@ func GenerateSettingFile() {
 	file.Path = "README.md"
 	file.Prefix = "AwesomeProject "
 	file.Postfix = " version"
+	file.IsSequential = false
+	settings.Files = append(settings.Files, file)
+
+	file.Path = "README.md"
+	file.Prefix = ""
+	file.Postfix = "th release"
+	file.IsSequential = true
 	settings.Files = append(settings.Files, file)
 
 	file.Path = "release_tag"
 	file.Prefix = "v"
 	file.Postfix = ""
+	file.IsSequential = false
 	settings.Files = append(settings.Files, file)
 
 	WriteBackSettings(settings)
@@ -119,7 +129,12 @@ func CheckVersions(versions *Versions) error {
 		var version Version
 		version.Path = file.Path
 
-		pattern := fmt.Sprintf("%s%s%s", file.Prefix, VERSION_PATTERN, file.Postfix)
+		var pattern string
+		if file.IsSequential {
+			pattern = fmt.Sprintf("%s%s%s", file.Prefix, SEQUENTIAL_VERSION_PATTERN, file.Postfix)
+		} else {
+			pattern = fmt.Sprintf("%s%s%s", file.Prefix, SEMANTIC_VERSION_PATTERN, file.Postfix)
+		}
 		matcher := regexp.MustCompile(pattern)
 
 		raw, err := ioutil.ReadFile(file.Path)
@@ -163,7 +178,7 @@ func ParseSettings(settingsFileName string, settings *Settings) error {
 		return fmt.Errorf("current version is empty or undefined")
 	}
 
-	r := regexp.MustCompile(VERSION_PATTERN)
+	r := regexp.MustCompile(SEMANTIC_VERSION_PATTERN)
 	if !r.MatchString(settings.Current) {
 		return fmt.Errorf("version is not like semver")
 	}
@@ -224,6 +239,14 @@ func WriteBackSettings(settings Settings) error {
 	return nil
 }
 
+func SemVerToInteger(semVer string) int {
+	split := strings.Split(semVer, ".")
+	major, _ := strconv.Atoi(split[0])
+	minor, _ := strconv.Atoi(split[1])
+	patch, _ := strconv.Atoi(split[2])
+	return major*10000 + minor*100 + patch
+}
+
 func Replace(settings Settings) error {
 	for _, file := range settings.Files {
 		if !Exists(file.Path) {
@@ -235,9 +258,16 @@ func Replace(settings Settings) error {
 			return err
 		}
 
-		pattern := fmt.Sprintf("%s(%s)%s", file.Prefix, VERSION_PATTERN, file.Postfix)
+		var pattern string
+		var target string
+		if file.IsSequential {
+			pattern = fmt.Sprintf("%s(%s)%s", file.Prefix, SEQUENTIAL_VERSION_PATTERN, file.Postfix)
+			target = fmt.Sprintf("%s%d%s", file.Prefix, SemVerToInteger(settings.Current), file.Postfix)
+		} else {
+			pattern = fmt.Sprintf("%s(%s)%s", file.Prefix, SEMANTIC_VERSION_PATTERN, file.Postfix)
+			target = fmt.Sprintf("%s%s%s", file.Prefix, settings.Current, file.Postfix)
+		}
 		matcher := regexp.MustCompile(pattern)
-		target := fmt.Sprintf("%s%s%s", file.Prefix, settings.Current, file.Postfix)
 
 		replaced := matcher.ReplaceAllString(string(raw), target)
 
