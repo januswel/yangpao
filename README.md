@@ -1,4 +1,4 @@
-揚炮 yangpao v0.1.0 n100
+揚炮 yangpao v0.1.1 n101
 ========================
 
 [![Circle CI](https://circleci.com/gh/januswel/yangpao/tree/master.svg?style=shield)](https://circleci.com/gh/:user/:repo/tree/master)
