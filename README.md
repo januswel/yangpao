@@ -3,7 +3,7 @@
 
 [![Circle CI](https://circleci.com/gh/januswel/yangpao/tree/master.svg?style=shield)](https://circleci.com/gh/:user/:repo/tree/master)
 
-version number raiser for [semver](http://semver.org/)
+version number bumper for [semver](http://semver.org/)
 
 inspired by [bmp](https://github.com/kt3k/bmp)
 
@@ -11,7 +11,7 @@ inspired by [bmp](https://github.com/kt3k/bmp)
 synopsis
 --------
 
-- raises version numbers in your project files in keeping with a setting file
+- bumps version numbers in your project files in keeping with a setting file
     - major version
     - minor version
     - patch version
@@ -100,15 +100,15 @@ yangpao -c
 yangpao --generate
 yangpao -g
 
-# raises patch version number
+# bumps patch version number
 yangpao --patch
 yangpao -p
 
-# raises minor version number
+# bumps minor version number
 yangpao --minor
 yangpao -m
 
-# raises major version number
+# bumps major version number
 # short option is not provided to prevent operational erros
 # because this operation means the version upgrade includes incompatible changes
 yangpao --major
