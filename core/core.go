@@ -18,10 +18,10 @@ type Settings struct {
 }
 
 type File struct {
-	Path         string
-	Prefix       string
-	Postfix      string
-	IsSequential bool
+	Path     string
+	Prefix   string
+	Postfix  string
+	IsNumber bool
 }
 
 type Versions struct {
@@ -92,19 +92,19 @@ func GenerateSettingFile() {
 	file.Path = "README.md"
 	file.Prefix = "AwesomeProject "
 	file.Postfix = " version"
-	file.IsSequential = false
+	file.IsNumber = false
 	settings.Files = append(settings.Files, file)
 
 	file.Path = "README.md"
 	file.Prefix = ""
 	file.Postfix = "th release"
-	file.IsSequential = true
+	file.IsNumber = true
 	settings.Files = append(settings.Files, file)
 
 	file.Path = "release_tag"
 	file.Prefix = "v"
 	file.Postfix = ""
-	file.IsSequential = false
+	file.IsNumber = false
 	settings.Files = append(settings.Files, file)
 
 	WriteBackSettings(settings)
@@ -130,7 +130,7 @@ func CheckVersions(versions *Versions) error {
 		version.Path = file.Path
 
 		var pattern string
-		if file.IsSequential {
+		if file.IsNumber {
 			pattern = fmt.Sprintf("%s%s%s", file.Prefix, SEQUENTIAL_VERSION_PATTERN, file.Postfix)
 		} else {
 			pattern = fmt.Sprintf("%s%s%s", file.Prefix, SEMANTIC_VERSION_PATTERN, file.Postfix)
@@ -260,7 +260,7 @@ func Replace(settings Settings) error {
 
 		var pattern string
 		var target string
-		if file.IsSequential {
+		if file.IsNumber {
 			pattern = fmt.Sprintf("%s(%s)%s", file.Prefix, SEQUENTIAL_VERSION_PATTERN, file.Postfix)
 			target = fmt.Sprintf("%s%d%s", file.Prefix, SemVerToInteger(settings.Current), file.Postfix)
 		} else {
