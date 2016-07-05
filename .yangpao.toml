@@ -4,16 +4,16 @@ Current = "0.1.0"
   Path = "README.md"
   Prefix = "v"
   Postfix = ""
-  IsSequential = false
+  IsNumber = false
 
 [[Files]]
   Path = "README.md"
-  Prefix = ""
-  Postfix = "th release"
-  IsSequential = true
+  Prefix = "n"
+  Postfix = ""
+  IsNumber = true
 
 [[Files]]
   Path = "release_tag"
   Prefix = "v"
   Postfix = ""
-  IsSequential = false
+  IsNumber = false

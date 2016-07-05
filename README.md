@@ -1,5 +1,5 @@
-揚炮 yangpao v0.1.0
-===================
+揚炮 yangpao v0.1.0 n100
+========================
 
 [![Circle CI](https://circleci.com/gh/januswel/yangpao/tree/master.svg?style=shield)](https://circleci.com/gh/:user/:repo/tree/master)
 
@@ -75,16 +75,16 @@ Current = "2.1.3"
   Postfix = " version"
 
 [[Files]]
-  # matches like "sequential version 20103" in src/public/index.html
-  Path = "src/public/index.html"
-  Prefix = "sequential version "
-  Postfix = ""
-  IsSequential = true
+  # matches like android:versionCode="20103" in AndroidManifest.xml
+  Path = "AndroidManifest.xml"
+  Prefix = "android:versionCode=\""
+  Postfix = "\""
+  IsNumber = true
 ```
 
-#### IsSequential
+#### IsNumber
 
-If "IsSequential" field is true, its "Files" settings are matches and bumps with sequential version number which corresponds to `major * 10000 + minor * 100 + patch`.
+If "IsNumber" field is true, its "Files" settings are matches and bumps with sequential version number which corresponds to `major * 10000 + minor * 100 + patch`.
 
 ### yangpao
 
